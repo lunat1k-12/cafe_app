@@ -27,6 +27,30 @@ public class MenuItem {
     @Column(name = "PRICE")
     private Double price;
 
+    @NotNull
+    @Column(name = "CATEGORY")
+    private String category;
+
+    @NotNull
+    @Column(name = "ENABLE")
+    private String enabled;
+
+    public String getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(String enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public Long getId() {
         return id;
     }
