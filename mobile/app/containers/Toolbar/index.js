@@ -4,8 +4,8 @@ import { StyleSheet, View, Text } from 'react-native';
 export default class Toolbar extends React.Component {
   render() {
     return (
-      <View styles={styles.container}>
-        <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consequatur culpa </Text>
+      <View style={styles.container}>
+        <Text>TOOLBAR</Text>
       </View>
     );
   }
@@ -13,8 +13,7 @@ export default class Toolbar extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     height: 40,
-    backgroundColor: 'red'
-  },
+    backgroundColor: '#2089dc'
+  }
 });

@@ -1,10 +1,9 @@
 import React from 'react';
 import {
   StyleSheet,
-  Text,
   StatusBar,
   View,
-  Button
+  Platform
 } from 'react-native';
 
 import Toolbar from "../Toolbar"
@@ -16,9 +15,10 @@ export default class Layout extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar
-          backgroundColor="blue"
+          backgroundColor="#3d6dcc"
           barStyle="light-content"
         />
+        <View style={styles.statusBarBackground}></View>
         <Toolbar />
         {this.props.children}
       </View>
@@ -29,7 +29,11 @@ export default class Layout extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     // backgroundColor: 'red'
   },
+  statusBarBackground: {
+    height: (Platform.OS === 'ios') ? 20 : 0,
+    backgroundColor: "#3d6dcc",
+  }
 });
