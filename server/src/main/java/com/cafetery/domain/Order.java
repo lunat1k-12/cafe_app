@@ -1,9 +1,6 @@
 package com.cafetery.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -11,6 +8,7 @@ import javax.validation.constraints.NotNull;
 public class Order {
 
     @Id
+    @GeneratedValue
     @Column(name = "ID")
     private Long id;
 
@@ -26,8 +24,20 @@ public class Order {
     private Long menuItem;
 
     @NotNull
+    @Column(name = "STATUS")
+    private String status;
+
+    @NotNull
     @Column(name = "SESSION_UUID")
     private String sessionUuid;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;

@@ -1,10 +1,8 @@
 package com.cafetery.controllers;
 
-import com.cafetery.constants.MenuCategory;
-import com.cafetery.dao.MenuItemRepository;
 import com.cafetery.domain.MenuItem;
 import com.cafetery.domain.wrapper.Result;
-import com.cafetery.utils.DomainUtils;
+import com.cafetery.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -13,36 +11,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("menu")
+@RequestMapping("/menu")
 public class MenuController {
 
     @Autowired
-    private MenuItemRepository menuItemRepo;
+    private IMenuService menuService;
 
     @GetMapping("/{category}")
     @ResponseBody
     public List<MenuItem> getMenu(@PathVariable("category") String shortCategory) {
-        MenuCategory category = MenuCategory.getByShortName(shortCategory);
-        return menuItemRepo.findAllByCategory(category.name());
+        return menuService.getMenu(shortCategory);
     }
 
     @PostMapping("/item")
     @ResponseBody
     public Result<MenuItem> addMenuItem(@RequestBody MenuItem item) {
-
-        Result<MenuItem> result = new Result<>();
-        if(DomainUtils.verifyCategory(item)) {
-            result.setDomain(menuItemRepo.save(item));
-        } else {
-            result.setError("Failed to add item.");
-        }
-
-        return result;
+        return menuService.addMenuItem(item);
     }
 
-    @DeleteMapping("/item/{id}")
+    @DeleteMapping("item/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteItem(@PathVariable("id") Long id) {
-        menuItemRepo.deleteById(id);
+        menuService.deleteItem(id);
     }
 }
