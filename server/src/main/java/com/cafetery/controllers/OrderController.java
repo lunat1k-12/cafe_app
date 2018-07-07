@@ -29,4 +29,11 @@ public class OrderController {
         order.setSessionUuid(sessionUuid);
         return orderService.addNewOrder(order);
     }
+
+    @PostMapping("/{sessionUuid}/{garconId}/bind-weitress")
+    @ResponseStatus(HttpStatus.OK)
+    public void bindWaitress(@PathVariable("sessionUuid") String garconId,
+                             @PathVariable("garconId") String sessionUUid) {
+        orderService.bindWaitressId(garconId,sessionUUid);
+    }
 }

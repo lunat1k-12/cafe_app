@@ -14,4 +14,6 @@ public interface IOrderService {
     void closeOrder(String sessionId);
 
     List<Order> addNewOrder(Order order);
+
+    void bindWaitressId(String garconId, String sessionUUid);
 }

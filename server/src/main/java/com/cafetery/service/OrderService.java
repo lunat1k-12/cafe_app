@@ -57,6 +57,17 @@ public class OrderService implements IOrderService {
         return orderRepo.findBySessionUuid(order.getSessionUuid());
     }
 
+    @Override
+    public void bindWaitressId(String garconId, String sessionUUid) {
+        List<Order> orders = orderRepo.findOpenBySessionUuid(sessionUUid);
+
+        for(Order order : orders) {
+            order.setGarconId(garconId);
+        }
+
+        orderRepo.saveAll(orders);
+    }
+
     private void populateSessionId(List<Order> orders) {
         if(!CollectionUtils.isEmpty(orders)) {
             String sessionId = UUID.randomUUID().toString();
