@@ -22,8 +22,8 @@ public class ClientController {
 
     @GetMapping("/generate-user-id")
     @ResponseBody
-    public String generateClientId() {
-        return userService.generateClientId();
+    public Result<String> generateClientId() {
+        return new Result<>(userService.generateClientId());
     }
 
 

@@ -1,0 +1,201 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- USERS -->
+    <changeSet author="Evgen" id="0.1">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="USERS"/>
+            </not>
+        </preConditions>
+        <createTable tableName="USERS">
+            <column name="ID" type="varchar(255)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="NAME" type="varchar(255)" />
+            <column name="PASSWORD" type="varchar(255)" />
+            <column name="EMAIL" type="varchar(255)" />
+            <column name="ROLE" type="varchar(255)" />
+            <column name="AVATAR" type="BLOB" />
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Evgen" id="0.11">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="USERS"/>
+        </preConditions>
+        <insert tableName="USERS">
+            <column name="ID" value="sdef-ddaw-23rf-432f"/>
+            <column name="NAME" value="Keil"/>
+            <column name="PASSWORD" value="test"/>
+            <column name="EMAIL" value="mail@email.com"/>
+            <column name="ROLE" value="WAITRESS"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Evgen" id="0.12">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="USERS"/>
+        </preConditions>
+        <insert tableName="USERS">
+            <column name="ID" value="sdef-ddaw-24rf-532f"/>
+            <column name="NAME" value="Admin"/>
+            <column name="PASSWORD" value="admin"/>
+            <column name="EMAIL" value="admin@email.com"/>
+            <column name="ROLE" value="ADMIN"/>
+        </insert>
+    </changeSet>
+
+    <!-- MENU ITEMS -->
+    <changeSet author="Evgen" id="0.13">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MENU_ITEMS"/>
+            </not>
+        </preConditions>
+        <createTable tableName="MENU_ITEMS">
+            <column name="ID" type="number">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="TITLE" type="varchar(255)" />
+            <column name="IMAGE" type="BLOB" />
+            <column name="DESCRIPTION" type="varchar(255)" />
+            <column name="PRICE" type="decimal" />
+            <column name="CATEGORY" type="varchar(255)" />
+            <column name="ENABLE" type="varchar(1)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Evgen" id="0.14">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="MENU_ITEMS"/>
+        </preConditions>
+        <insert tableName="MENU_ITEMS">
+            <column name="ID" value="112"/>
+            <column name="TITLE" value="Borsh"/>
+            <column name="DESCRIPTION" value="Ukrainian soup"/>
+            <column name="PRICE" value="97"/>
+            <column name="ENABLE" value="Y"/>
+            <column name="CATEGORY" value="FOOD"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Evgen" id="0.15">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="MENU_ITEMS"/>
+        </preConditions>
+        <insert tableName="MENU_ITEMS">
+            <column name="ID" value="113"/>
+            <column name="TITLE" value="Burger"/>
+            <column name="DESCRIPTION" value="bread with meat"/>
+            <column name="PRICE" value="112"/>
+            <column name="ENABLE" value="Y"/>
+            <column name="CATEGORY" value="FOOD"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Evgen" id="0.16">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="MENU_ITEMS"/>
+        </preConditions>
+        <insert tableName="MENU_ITEMS">
+            <column name="ID" value="114"/>
+            <column name="TITLE" value="Rom-Cola"/>
+            <column name="DESCRIPTION" value="Rom with cola"/>
+            <column name="PRICE" value="86"/>
+            <column name="ENABLE" value="Y"/>
+            <column name="CATEGORY" value="CONCTAIL"/>
+        </insert>
+    </changeSet>
+
+    <!-- TABLES -->
+    <changeSet author="Evgen" id="0.17">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TABLES"/>
+            </not>
+        </preConditions>
+        <createTable tableName="TABLES">
+            <column name="ID" type="number">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="PLACE_ID" type="varchar(255)" />
+            <column name="GUESTS_COUNT" type="number" />
+            <column name="STATE" type="varchar(50)" />
+            <column name="CURRENT_USER" type="varchar(255)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Evgen" id="0.18">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="TABLES"/>
+        </preConditions>
+        <insert tableName="TABLES">
+            <column name="ID" value="1"/>
+            <column name="PLACE_ID" value="cafeteria"/>
+            <column name="GUESTS_COUNT" value="4"/>
+            <column name="STATE" value="FREE"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Evgen" id="0.19">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="TABLES"/>
+        </preConditions>
+        <insert tableName="TABLES">
+            <column name="ID" value="2"/>
+            <column name="PLACE_ID" value="cafeteria"/>
+            <column name="GUESTS_COUNT" value="4"/>
+            <column name="STATE" value="FREE"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Evgen" id="0.20">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="TABLES"/>
+        </preConditions>
+        <insert tableName="TABLES">
+            <column name="ID" value="3"/>
+            <column name="PLACE_ID" value="cafeteria"/>
+            <column name="GUESTS_COUNT" value="2"/>
+            <column name="STATE" value="FREE"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Evgen" id="0.21">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="TABLES"/>
+        </preConditions>
+        <insert tableName="TABLES">
+            <column name="ID" value="4"/>
+            <column name="PLACE_ID" value="cafeteria"/>
+            <column name="GUESTS_COUNT" value="2"/>
+            <column name="STATE" value="FREE"/>
+        </insert>
+    </changeSet>
+
+    <!-- ORDERS -->
+    <changeSet author="Evgen" id="0.22">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ORDERS"/>
+            </not>
+        </preConditions>
+        <createTable tableName="ORDERS">
+            <column name="ID" type="number">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="USER_ID" type="varchar(255)" />
+            <column name="GARCON_ID" type="varchar(255)" />
+            <column name="MENU_ITEM" type="number"/>
+            <column name="STATUS" type="varchar(255)" />
+            <column name="SESSION_UUID" type="varchar(255)" />
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

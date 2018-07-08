@@ -1,6 +1,13 @@
 package com.cafetery.domain.wrapper;
 
 public class Result<T> {
+
+    public Result() { }
+
+    public Result(T domain) {
+       this.domain = domain;
+    }
+
     private T domain;
 
     private String error;

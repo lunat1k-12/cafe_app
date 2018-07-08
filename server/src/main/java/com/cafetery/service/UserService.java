@@ -14,6 +14,16 @@ public class UserService implements IUserService {
 
     @Override
     public String generateClientId() {
+        return generateClientId(CafeRoles.ANONIMOUS.toString()).getId();
+    }
+
+    @Override
+    public User registerWaitress(User user) {
+
+        return generateClientId(CafeRoles.WAITRESS.toString());
+    }
+
+    private User generateClientId(String role) {
         String id;
         do {
             id = UUID.randomUUID().toString();
@@ -21,9 +31,8 @@ public class UserService implements IUserService {
 
         User user = new User();
         user.setId(id);
-        user.setRole(CafeRoles.WAITRESS.toString());
-        userRepo.save(user);
+        user.setRole(role);
 
-        return id;
+        return userRepo.save(user);
     }
 }

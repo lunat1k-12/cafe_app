@@ -15,6 +15,9 @@ public class OrderService implements IOrderService {
     @Autowired
     private OrderRepository orderRepo;
 
+    @Autowired
+    private IClientNotify clientNotify;
+
     @Override
     public Result<List<Order>> addNewOrders(List<Order> orders) {
         Result<List<Order>> result = new Result<>();
@@ -48,6 +51,7 @@ public class OrderService implements IOrderService {
         }
 
         orderRepo.saveAll(orders);
+        orders.forEach(clientNotify::orderUpdated);
     }
 
     @Override
@@ -66,6 +70,7 @@ public class OrderService implements IOrderService {
         }
 
         orderRepo.saveAll(orders);
+        orders.forEach(clientNotify::orderUpdated);
     }
 
     private void populateSessionId(List<Order> orders) {

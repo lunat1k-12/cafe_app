@@ -24,6 +24,17 @@ public class CafeTable {
     @Column(name = "STATE")
     private String state;
 
+    @Column(name = "CURRENT_USER")
+    private String currentUser;
+
+    public String getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public String getPlaceId() {
         return placeId;
     }

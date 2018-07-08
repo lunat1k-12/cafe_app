@@ -2,6 +2,7 @@ package com.cafetery.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "MENU_ITEMS")
@@ -25,7 +26,7 @@ public class MenuItem {
 
     @NotNull
     @Column(name = "PRICE")
-    private Double price;
+    private BigDecimal price;
 
     @NotNull
     @Column(name = "CATEGORY")
@@ -83,11 +84,11 @@ public class MenuItem {
         this.description = description;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

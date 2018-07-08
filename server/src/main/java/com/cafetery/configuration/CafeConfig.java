@@ -21,4 +21,14 @@ public class CafeConfig {
     public IMenuService getMenuService() {
         return new MenuService();
     }
+
+    @Bean
+    public ITableService getTableService() {
+        return new TableService();
+    }
+
+    @Bean
+    public IClientNotify getClientNotify() {
+        return new ClientNotify();
+    }
 }
