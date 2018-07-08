@@ -2,24 +2,19 @@ import React from 'react';
 import {
   StyleSheet,
   StatusBar,
-  View,
-  Platform
+  View
 } from 'react-native';
 
-import Toolbar from "../Toolbar"
-
-
+import { DrawerActions } from 'react-navigation';
 
 export default class Layout extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <StatusBar
-          backgroundColor="#3d6dcc"
+          backgroundColor={this.props.HeaderBg}
           barStyle="light-content"
         />
-        <View style={styles.statusBarBackground}></View>
-        <Toolbar />
         {this.props.children}
       </View>
     );
@@ -30,10 +25,5 @@ export default class Layout extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'red'
-  },
-  statusBarBackground: {
-    height: (Platform.OS === 'ios') ? 20 : 0,
-    backgroundColor: "#3d6dcc",
   }
 });
