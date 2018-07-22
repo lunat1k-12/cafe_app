@@ -9,16 +9,27 @@ import Burger from "./app/components/Burger";
 import CoctailsMenu from "./app/components/CoctailsMenu";
 import FoodMenu from "./app/components/FoodMenu";
 import Home from "./app/components/Home";
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import reducer from './app/reducers';
+import { Provider } from 'react-redux';
+import {watchFetchFood} from "./app/sagas";
 
 
 const HeaderBg = "#000";
 
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(watchFetchFood);
+
 export default class App extends React.Component {
   render() {
     return (
-      <Layout headerBg={HeaderBg}>
-        <Navigation />
-      </Layout>
+        <Provider store={store}>
+            <Layout headerBg={HeaderBg}>
+                <Navigation/>
+            </Layout>
+        </Provider>
     );
   }
 }

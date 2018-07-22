@@ -1,11 +1,28 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { connect } from 'react-redux';
+import {fetchFood} from './actions';
 
-export default class FoodMenu extends React.Component {
+export class FoodMenu extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+    componentDidMount() {
+        this.props.loadFood();
+    }
+
+    renderFoods = () => {
+        return this.props.food.map((f, key) => <View key={key}>
+            <Text >{f.title}  -  {f.description} - {f.price}</Text>
+
+        </View>);
+    };
+
     render() {
         return (
             <View style={styles.container}>
-                <Text>Food</Text>
+                {this.renderFoods()}
                 <Button
                     title="Go to Coctails Details"
                     onPress={() => this.props.navigation.navigate('CoctailsMenu')}
@@ -27,3 +44,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+mapStateToProps = (state) => {
+    return {
+        food: state.food
+    }
+};
+
+mapDispatchToProps = dispatch => {
+    return {
+        loadFood: () => dispatch(fetchFood())
+    };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(FoodMenu);

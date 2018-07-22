@@ -2,7 +2,7 @@ package com.cafetery.constants;
 
 public enum MenuCategory {
 
-    CONCTAIL("contails"), FOOD("food");
+    COCKTAILS("cocktails"), FOOD("food");
 
     private String shortName;
 

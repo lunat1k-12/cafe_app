@@ -100,7 +100,7 @@
         </insert>
     </changeSet>
 
-    <changeSet author="Evgen" id="0.16">
+    <changeSet author="Evgen" id="0.161">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="MENU_ITEMS"/>
         </preConditions>
@@ -110,7 +110,7 @@
             <column name="DESCRIPTION" value="Rom with cola"/>
             <column name="PRICE" value="86"/>
             <column name="ENABLE" value="Y"/>
-            <column name="CATEGORY" value="CONCTAIL"/>
+            <column name="CATEGORY" value="COCKTAILS"/>
         </insert>
     </changeSet>
 

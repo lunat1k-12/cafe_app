@@ -45,7 +45,7 @@ export default class Burger extends React.Component {
     return (
 
       <TouchableHighlight
-        onPress={() => this.props.navigate.toggleDrawer()}
+        onPress={this.props.navigate.toggleDrawer}
       >
         <View style={mainStyles.burger}>
           <View style={mainStyles.topLine}></View>

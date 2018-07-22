@@ -12,7 +12,7 @@ export default class Home extends React.Component {
         <Text>It Works !!!</Text>
         <Button
           title="Open"
-          onPress={() => this.props.navigation.openDrawer()}
+          onPress={this.props.navigation.openDrawer}
         />
       </View>
     );
