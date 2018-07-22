@@ -1,13 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { connect } from 'react-redux';
+import {Button, StyleSheet, Text, View} from 'react-native';
+import {connect} from 'react-redux';
 import {fetchFood} from './actions';
 
 export class FoodMenu extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
     componentDidMount() {
         this.props.loadFood();
     }

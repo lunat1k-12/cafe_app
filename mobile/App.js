@@ -13,14 +13,14 @@ import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import reducer from './app/reducers';
 import { Provider } from 'react-redux';
-import {watchFetchFood} from "./app/sagas";
+import {watchFetch} from "./app/sagas";
 
 
 const HeaderBg = "#000";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));
-sagaMiddleware.run(watchFetchFood);
+sagaMiddleware.run(watchFetch);
 
 export default class App extends React.Component {
   render() {

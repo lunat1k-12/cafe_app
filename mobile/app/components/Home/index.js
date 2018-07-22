@@ -1,8 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
+import {connect} from 'react-redux';
+import {fetchUserUuid, GENERATE_USER_UUID, generateUserUuid} from "./actions";
 
 
-export default class Home extends React.Component {
+export class Home extends React.Component {
+
+    componentDidMount() {
+       if(this.props.userUuid === 'N/A') {
+           this.props.getUserUuid();
+       } else if(this.props.userUuid === GENERATE_USER_UUID) {
+           this.props.generateUuid();
+       }
+    };
+
   render() {
     return (
       <View style={styles.container} >
@@ -26,3 +37,18 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
 });
+
+mapStateToProps = (state) => {
+    return {
+        userUuid: state.userUuid
+    }
+};
+
+mapDispatchToProps = dispatch => {
+    return {
+        getUserUuid: () => dispatch(fetchUserUuid()),
+        generateUuid: () => dispatch(generateUserUuid())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

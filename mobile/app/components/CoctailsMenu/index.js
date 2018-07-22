@@ -1,11 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { connect } from 'react-redux';
+import {fetchCocktails} from "./actions";
 
-export default class CoctailsMenu extends React.Component {
+export class CoctailsMenu extends React.Component {
+
+    componentDidMount() {
+        this.props.loadCocktails();
+    }
+
+    renderCocktails = () => {
+        return this.props.cocktails.map((f, key) => <View key={key}>
+            <Text >{f.title}  -  {f.description} - {f.price}</Text>
+
+        </View>);
+    };
+
     render() {
         return (
             <View style={styles.container}>
-                <Text>Coctails</Text>
+                {this.renderCocktails()}
                 <Button
                     title="Go to Food Details"
                     onPress={() => this.props.navigation.navigate('FoodMenu')}
@@ -27,3 +41,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+mapStateToProps = (state) => {
+    return {
+        cocktails: state.cocktails
+    }
+};
+
+mapDispatchToProps = dispatch => {
+    return {
+        loadCocktails: () => dispatch(fetchCocktails())
+    };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(CoctailsMenu);
