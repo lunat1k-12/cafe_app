@@ -6,14 +6,14 @@ import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
 
 import Layout from "./app/containers/Layout";
 import Burger from "./app/components/Burger";
-import FoodMenu from "./app/components/FoodMenu";
+import FoodMenu from "./app/components/Menu/FoodMenu";
 import Home from "./app/components/Home";
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import reducer from './app/reducers';
 import { Provider } from 'react-redux';
 import {watchFetch} from "./app/sagas";
-import CocktailsMenu from "./app/components/CocktailsMenu";
+import CocktailsMenu from "./app/components/Menu/CocktailsMenu";
 import {COLORS} from "./app/Utils/constants";
 
 const sagaMiddleware = createSagaMiddleware();

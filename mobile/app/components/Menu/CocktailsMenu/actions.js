@@ -1,5 +1,5 @@
-import {URL_BASE} from "../../Utils/constants";
 import {call, put} from 'redux-saga/effects';
+import {URL_BASE} from "../../../Utils/constants";
 
 export const COCKTAILS_MENU_LOADED = 'COCKTAILS_MENU_LOADED';
 export const FETCHED_COCKTAILS = 'FETCHED_COCKTAILS';
