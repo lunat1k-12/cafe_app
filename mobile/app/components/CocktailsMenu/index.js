@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {fetchCocktails} from "./actions";
+import MenuGrid from "../MenuGrid";
 
 export class CocktailsMenu extends React.Component {
 
@@ -9,40 +9,21 @@ export class CocktailsMenu extends React.Component {
         this.props.loadCocktails();
     }
 
-    renderCocktails = () => {
-        return this.props.cocktails.map((f, key) => <View key={key}>
-            <Text >{f.title}  -  {f.description} - {f.price}</Text>
-
-        </View>);
+    clickHandler = (cocktail) => {
+        console.log(cocktail);
     };
 
     render() {
-        return (
-            <View style={styles.container}>
-                {this.renderCocktails()}
-                <Button
-                    title="Go to Food Details"
-                    onPress={() => this.props.navigation.navigate('FoodMenu')}
-                />
-                <Button
-                    title="Open"
-                    onPress={() => this.props.navigation.openDrawer()}
-                />
-            </View>
+        return(
+            <MenuGrid
+                items={this.props.cocktails}
+                itemOnClick={this.clickHandler}/>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
-
 mapStateToProps = (state) => {
+    console.log(state);
     return {
         cocktails: state.cocktails
     }

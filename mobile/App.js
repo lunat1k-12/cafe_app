@@ -13,7 +13,7 @@ import createSagaMiddleware from 'redux-saga';
 import reducer from './app/reducers';
 import { Provider } from 'react-redux';
 import {watchFetch} from "./app/sagas";
-import {CocktailsMenu} from "./app/components/CocktailsMenu";
+import CocktailsMenu from "./app/components/CocktailsMenu";
 
 const HeaderBg = "#000";
 
