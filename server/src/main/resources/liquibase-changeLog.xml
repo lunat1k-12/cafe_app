@@ -114,6 +114,48 @@
         </insert>
     </changeSet>
 
+    <changeSet author="Evgen" id="0.162">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="MENU_ITEMS"/>
+        </preConditions>
+        <insert tableName="MENU_ITEMS">
+            <column name="ID" value="115"/>
+            <column name="TITLE" value="Pinacolada"/>
+            <column name="DESCRIPTION" value="Soft drink with some shit"/>
+            <column name="PRICE" value="75"/>
+            <column name="ENABLE" value="Y"/>
+            <column name="CATEGORY" value="COCKTAILS"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Evgen" id="0.163">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="MENU_ITEMS"/>
+        </preConditions>
+        <insert tableName="MENU_ITEMS">
+            <column name="ID" value="116"/>
+            <column name="TITLE" value="Sunrise"/>
+            <column name="DESCRIPTION" value="Soft drink with more shit"/>
+            <column name="PRICE" value="354"/>
+            <column name="ENABLE" value="Y"/>
+            <column name="CATEGORY" value="COCKTAILS"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Evgen" id="0.164">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="MENU_ITEMS"/>
+        </preConditions>
+        <insert tableName="MENU_ITEMS">
+            <column name="ID" value="117"/>
+            <column name="TITLE" value="Vodka"/>
+            <column name="DESCRIPTION" value="Just vodka"/>
+            <column name="PRICE" value="20"/>
+            <column name="ENABLE" value="Y"/>
+            <column name="CATEGORY" value="COCKTAILS"/>
+        </insert>
+    </changeSet>
+
     <!-- TABLES -->
     <changeSet author="Evgen" id="0.17">
         <preConditions onFail="MARK_RAN">

@@ -25,7 +25,9 @@ export default class MenuGrid extends React.Component {
     };
 
     render() {
-        return (<ScrollView contentContainerStyle={styles.container}>
+        return (<ScrollView
+            contentContainerStyle={styles.container}
+            >
             {this.renderItems()}
         </ScrollView>);
     }
@@ -33,9 +35,9 @@ export default class MenuGrid extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        //flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        //alignItems: 'center',
+        //justifyContent: 'center',
     }
 });
