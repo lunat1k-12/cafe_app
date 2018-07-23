@@ -1,5 +1,6 @@
 package com.cafetery.controllers;
 
+import com.cafetery.constants.AppConstants;
 import com.cafetery.domain.Order;
 import com.cafetery.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class OrderController {
     @ResponseBody
     public List<Order> addNewOrder(@PathVariable String sessionUuid,
                                    @RequestBody Order order) {
-        order.setSessionUuid(sessionUuid);
+        String session = AppConstants.NEW_ORDER_UUID.equals(sessionUuid) ? orderService.generateSessionUuid(order.getUserId()) : sessionUuid;
+        order.setSessionUuid(session);
         return orderService.addNewOrder(order);
     }
 

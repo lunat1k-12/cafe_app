@@ -73,6 +73,16 @@ public class OrderService implements IOrderService {
         orders.forEach(clientNotify::orderUpdated);
     }
 
+    @Override
+    public String generateSessionUuid(String userId) {
+        String id;
+        do {
+            id = UUID.randomUUID().toString();
+        } while (!CollectionUtils.isEmpty(orderRepo.findBySessionUuid(id)));
+
+        return id;
+    }
+
     private void populateSessionId(List<Order> orders) {
         if(!CollectionUtils.isEmpty(orders)) {
             String sessionId = UUID.randomUUID().toString();

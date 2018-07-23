@@ -12,4 +12,6 @@ public interface IMenuService {
     Result<MenuItem> addMenuItem(MenuItem item);
 
     void deleteItem(Long id);
+
+    Result<MenuItem> editMenuItem(MenuItem item);
 }

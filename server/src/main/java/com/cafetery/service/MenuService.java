@@ -37,4 +37,11 @@ public class MenuService implements IMenuService {
     public void deleteItem(Long id) {
         menuItemRepo.deleteById(id);
     }
+
+    @Override
+    public Result<MenuItem> editMenuItem(MenuItem item) {
+        Result<MenuItem> result = new Result<>();
+        result.setDomain(menuItemRepo.save(item));
+        return result;
+    }
 }

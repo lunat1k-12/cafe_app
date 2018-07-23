@@ -34,4 +34,10 @@ public class MenuController {
     public void deleteItem(@PathVariable("id") Long id) {
         menuService.deleteItem(id);
     }
+
+    @PostMapping("/item/edit")
+    @ResponseBody
+    public Result<MenuItem> editMenuItem(@RequestBody MenuItem item) {
+        return menuService.editMenuItem(item);
+    }
 }
