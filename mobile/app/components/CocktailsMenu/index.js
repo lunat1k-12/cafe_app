@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import {fetchCocktails} from "./actions";
 
-export class CoctailsMenu extends React.Component {
+export class CocktailsMenu extends React.Component {
 
     componentDidMount() {
         this.props.loadCocktails();
@@ -54,4 +54,4 @@ mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(CoctailsMenu);
+export default connect(mapStateToProps,mapDispatchToProps)(CocktailsMenu);

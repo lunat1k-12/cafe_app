@@ -5,8 +5,6 @@ import {
   View
 } from 'react-native';
 
-import { DrawerActions } from 'react-navigation';
-
 export default class Layout extends React.Component {
   render() {
     return (

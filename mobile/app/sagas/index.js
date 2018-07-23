@@ -1,6 +1,6 @@
 import {FETCHED_FOOD, fetchFoodAsync} from "../components/FoodMenu/actions";
 import {takeEvery} from 'redux-saga/effects';
-import {fetchCocktailsAsync, FETCHED_COCKTAILS} from "../components/CoctailsMenu/actions";
+import {fetchCocktailsAsync, FETCHED_COCKTAILS} from "../components/CocktailsMenu/actions";
 import {
     FETCHED_USER_UUID,
     fetchUserUuidAsync,

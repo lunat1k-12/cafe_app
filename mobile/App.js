@@ -6,7 +6,6 @@ import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
 
 import Layout from "./app/containers/Layout";
 import Burger from "./app/components/Burger";
-import CoctailsMenu from "./app/components/CoctailsMenu";
 import FoodMenu from "./app/components/FoodMenu";
 import Home from "./app/components/Home";
 import { createStore, applyMiddleware } from 'redux';
@@ -14,7 +13,7 @@ import createSagaMiddleware from 'redux-saga';
 import reducer from './app/reducers';
 import { Provider } from 'react-redux';
 import {watchFetch} from "./app/sagas";
-
+import {CocktailsMenu} from "./app/components/CocktailsMenu";
 
 const HeaderBg = "#000";
 
@@ -36,7 +35,7 @@ export default class App extends React.Component {
 
 const MyApp = createDrawerNavigator({
   Home: {screen: Home},
-  CoctailsMenu: { screen: CoctailsMenu },
+  CoctailsMenu: { screen: CocktailsMenu },
   FoodMenu: {screen: FoodMenu}
 });
 

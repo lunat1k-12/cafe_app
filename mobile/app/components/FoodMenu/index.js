@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {fetchFood} from './actions';
+import {CocktailsMenu} from "../CocktailsMenu";
 
 export class FoodMenu extends React.Component {
 
@@ -21,8 +22,8 @@ export class FoodMenu extends React.Component {
             <View style={styles.container}>
                 {this.renderFoods()}
                 <Button
-                    title="Go to Coctails Details"
-                    onPress={() => this.props.navigation.navigate('CoctailsMenu')}
+                    title="Go to Cocktails Details"
+                    onPress={() => this.props.navigation.navigate('CocktailsMenu')}
                 />
                 <Button
                     title="Open"
