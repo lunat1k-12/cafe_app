@@ -10,7 +10,7 @@ export default class Layout extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar
-          backgroundColor={this.props.HeaderBg}
+          backgroundColor={this.props.headerBg}
           barStyle="light-content"
         />
         {this.props.children}

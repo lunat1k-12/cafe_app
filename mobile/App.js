@@ -14,8 +14,7 @@ import reducer from './app/reducers';
 import { Provider } from 'react-redux';
 import {watchFetch} from "./app/sagas";
 import CocktailsMenu from "./app/components/CocktailsMenu";
-
-const HeaderBg = "#000";
+import {COLORS} from "./app/Utils/constants";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));
@@ -25,7 +24,7 @@ export default class App extends React.Component {
   render() {
     return (
         <Provider store={store}>
-            <Layout headerBg={HeaderBg}>
+            <Layout headerBg={COLORS.black}>
                 <Navigation/>
             </Layout>
         </Provider>
@@ -34,9 +33,25 @@ export default class App extends React.Component {
 }
 
 const MyApp = createDrawerNavigator({
-  Home: {screen: Home},
-  CoctailsMenu: { screen: CocktailsMenu },
-  FoodMenu: {screen: FoodMenu}
+  Hom: {
+    screen: Home,
+    navigationOptions: { title: 'Home' }
+  },
+  CocktailsMenu: {
+    screen: CocktailsMenu,
+    navigationOptions: { title: 'Cocktails Menu' }
+  },
+  FoodMenu: {
+    screen: FoodMenu,
+    navigationOptions: { title: 'Food Menu' }
+  }
+}, {
+  drawerBackgroundColor: COLORS.black,
+  contentOptions: {
+    activeBackgroundColor: COLORS.orange,
+    activeTintColor: COLORS.black,
+    inactiveTintColor: COLORS.orange
+  }
 });
 
 const Navigation = createStackNavigator({
@@ -52,13 +67,13 @@ const Navigation = createStackNavigator({
       <Button title='User' onPress={() => console.log('User Data')}/>
     ),
     headerStyle: {
-      backgroundColor: HeaderBg,
+      backgroundColor: COLORS.black,
       borderBottomWidth: 0
     },
-    headerTintColor: HeaderBg,
+    headerTintColor: COLORS.black,
     headerTitleStyle: {
       fontWeight: 'bold',
-      color: '#ff7110'
+      color: COLORS.orange
     }
   }),
 });

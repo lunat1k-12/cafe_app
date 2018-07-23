@@ -10,7 +10,13 @@ export class CocktailsMenu extends React.Component {
     }
 
     clickHandler = (cocktail) => {
-        console.log(cocktail);
+      console.log(cocktail);
+    };
+
+    renderCocktails = () => {
+        return this.props.cocktails.map((c, key) => <View key={key}>
+            <Text >{c.title}  -  {c.description} - {c.price}</Text>
+        </View>);
     };
 
     render() {
