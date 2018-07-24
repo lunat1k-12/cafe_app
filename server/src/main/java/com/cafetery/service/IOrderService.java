@@ -1,21 +1,22 @@
 package com.cafetery.service;
 
 import com.cafetery.domain.Order;
+import com.cafetery.domain.OrderItem;
 import com.cafetery.domain.wrapper.Result;
 
 import java.util.List;
 
 public interface IOrderService {
 
-    Result<List<Order>> addNewOrders(List<Order> orders);
+    Result<List<OrderItem>> addNewOrderItems(List<OrderItem> orders);
 
-    List<Order> getSessionOrders(String sessionId, String userId);
+    void closeOrder(Long orderId);
 
-    void closeOrder(String sessionId);
+    Result<OrderItem> addOrderItem(OrderItem order);
 
-    List<Order> addNewOrder(Order order);
+    void bindWaitressId(String garconId, Long orderId);
 
-    void bindWaitressId(String garconId, String sessionUUid);
+    List<Order> findOpenByUserId(String userUuid);
 
-    String generateSessionUuid(String userId);
+    Order openNewOrder(String userUuid, Long tableId);
 }

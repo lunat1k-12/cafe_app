@@ -1,14 +1,16 @@
 package com.cafetery.service;
 
+import com.cafetery.constants.OrderItemStatus;
 import com.cafetery.constants.OrderStatus;
+import com.cafetery.dao.OrderItemRepository;
 import com.cafetery.dao.OrderRepository;
 import com.cafetery.domain.Order;
+import com.cafetery.domain.OrderItem;
 import com.cafetery.domain.wrapper.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 public class OrderService implements IOrderService {
 
@@ -16,15 +18,18 @@ public class OrderService implements IOrderService {
     private OrderRepository orderRepo;
 
     @Autowired
+    private OrderItemRepository orderItemRepo;
+
+    @Autowired
     private IClientNotify clientNotify;
 
     @Override
-    public Result<List<Order>> addNewOrders(List<Order> orders) {
-        Result<List<Order>> result = new Result<>();
+    public Result<List<OrderItem>> addNewOrderItems(List<OrderItem> orders) {
+        Result<List<OrderItem>> result = new Result<>();
+        orders.forEach(o -> o.setStatus(OrderItemStatus.OPEN.name()));
 
         try {
-            populateSessionId(orders);
-            orderRepo.saveAll(orders);
+            orderItemRepo.saveAll(orders);
             result.setDomain(orders);
         } catch(Exception e) {
             result.setError(e.getMessage());
@@ -34,62 +39,54 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<Order> getSessionOrders(String sessionId, String userId) {
-        return orderRepo.findBySessionUuidAndUserId(sessionId, userId);
-    }
+    public void closeOrder(Long orderId) {
+        Optional<Order> optional = orderRepo.findById(orderId);
 
-    @Override
-    public void closeOrder(String sessionId) {
-        List<Order> orders = orderRepo.findOpenBySessionUuid(sessionId);
-
-        if(CollectionUtils.isEmpty(orders)) {
+        if(!optional.isPresent()) {
            return;
         }
+        Order order = optional.get();
+        order.setStatus(OrderStatus.CLOSED.toString());
 
-        for(Order order : orders) {
-            order.setStatus(OrderStatus.CLOSED.toString());
-        }
-
-        orderRepo.saveAll(orders);
-        orders.forEach(clientNotify::orderUpdated);
-    }
-
-    @Override
-    public List<Order> addNewOrder(Order order) {
-        // TODO: implement validation
         orderRepo.save(order);
-        return orderRepo.findBySessionUuid(order.getSessionUuid());
+        clientNotify.orderUpdated(order);
     }
 
     @Override
-    public void bindWaitressId(String garconId, String sessionUUid) {
-        List<Order> orders = orderRepo.findOpenBySessionUuid(sessionUUid);
-
-        for(Order order : orders) {
-            order.setGarconId(garconId);
-        }
-
-        orderRepo.saveAll(orders);
-        orders.forEach(clientNotify::orderUpdated);
+    public Result<OrderItem> addOrderItem(OrderItem order) {
+        // TODO: implement validation
+        order.setStatus(OrderItemStatus.OPEN.name());
+        Result<OrderItem> result = new Result<>();
+        result.setDomain(orderItemRepo.save(order));
+        return result;
     }
 
     @Override
-    public String generateSessionUuid(String userId) {
-        String id;
-        do {
-            id = UUID.randomUUID().toString();
-        } while (!CollectionUtils.isEmpty(orderRepo.findBySessionUuid(id)));
+    public void bindWaitressId(String garconId, Long orderId) {
+        Optional<Order> optional = orderRepo.findById(orderId);
 
-        return id;
-    }
-
-    private void populateSessionId(List<Order> orders) {
-        if(!CollectionUtils.isEmpty(orders)) {
-            String sessionId = UUID.randomUUID().toString();
-            for(Order order : orders) {
-               order.setSessionUuid(sessionId);
-               order.setStatus(OrderStatus.OPEN.toString());
-            }
+        if(!optional.isPresent()) {
+            return;
         }
+        Order order = optional.get();
+        order.setGarconId(garconId);
+
+        orderRepo.save(order);
+        clientNotify.orderUpdated(order);
     }
+
+    @Override
+    public List<Order> findOpenByUserId(String userUuid) {
+        return orderRepo.findOpenByUserId(userUuid);
+    }
+
+    @Override
+    public Order openNewOrder(String userUuid, Long tableId) {
+        Order order = new Order();
+        order.setUserId(userUuid);
+        order.setStatus(OrderStatus.OPEN.name());
+        order.setTableId(tableId);
+        return orderRepo.save(order);
+    }
+
 }

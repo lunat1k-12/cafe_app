@@ -1,7 +1,8 @@
 package com.cafetery.controllers;
 
-import com.cafetery.constants.AppConstants;
 import com.cafetery.domain.Order;
+import com.cafetery.domain.OrderItem;
+import com.cafetery.domain.wrapper.Result;
 import com.cafetery.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,25 +18,35 @@ public class OrderController {
     @Autowired
     private IOrderService orderService;
 
-    @PostMapping("/{sessionUuid}/close")
-    @ResponseStatus(HttpStatus.OK)
-    public void closeOrder(@PathVariable("sessionUuid") String sessionUuid) {
-        orderService.closeOrder(sessionUuid);
-    }
-
-    @PostMapping("/{sessionUuid}/add-item")
+    @GetMapping("/{userUuid}/{tableId}/open")
     @ResponseBody
-    public List<Order> addNewOrder(@PathVariable String sessionUuid,
-                                   @RequestBody Order order) {
-        String session = AppConstants.NEW_ORDER_UUID.equals(sessionUuid) ? orderService.generateSessionUuid(order.getUserId()) : sessionUuid;
-        order.setSessionUuid(session);
-        return orderService.addNewOrder(order);
+    public Order openNewOrder(@PathVariable("userUuid") String userUuid,
+                              @PathVariable("tableId") Long tableId) {
+        return orderService.openNewOrder(userUuid, tableId);
     }
 
-    @PostMapping("/{sessionUuid}/{garconId}/bind-waitress")
+    @GetMapping("/{userUuid}/get-open-orders")
+    @ResponseBody
+    public List<Order> getOpenOrders(@PathVariable("userUuid") String userUuid) {
+        return orderService.findOpenByUserId(userUuid);
+    }
+
+    @PostMapping("/{orderId}/close")
     @ResponseStatus(HttpStatus.OK)
-    public void bindWaitress(@PathVariable("sessionUuid") String garconId,
-                             @PathVariable("garconId") String sessionUUid) {
-        orderService.bindWaitressId(garconId,sessionUUid);
+    public void closeOrder(@PathVariable("orderId") Long orderId) {
+        orderService.closeOrder(orderId);
+    }
+
+    @PostMapping("/add-item")
+    @ResponseBody
+    public Result<OrderItem> addNewOrder(@RequestBody OrderItem order) {
+        return orderService.addOrderItem(order);
+    }
+
+    @PostMapping("/{orderId}/{garconId}/bind-waitress")
+    @ResponseStatus(HttpStatus.OK)
+    public void bindWaitress(@PathVariable("garconId") String garconId,
+                             @PathVariable("orderId") Long orderId) {
+        orderService.bindWaitressId(garconId,orderId);
     }
 }

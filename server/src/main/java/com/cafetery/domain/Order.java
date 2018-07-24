@@ -19,24 +19,19 @@ public class Order {
     @Column(name = "GARCON_ID")
     private String garconId;
 
-    @NotNull
-    @Column(name = "MENU_ITEM")
-    private Long menuItem;
+    @Column(name = "TABLE_ID")
+    private Long tableId;
 
     @NotNull
     @Column(name = "STATUS")
     private String status;
 
-    @NotNull
-    @Column(name = "SESSION_UUID")
-    private String sessionUuid;
-
-    public String getStatus() {
-        return status;
+    public Long getTableId() {
+        return tableId;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setTableId(Long tableId) {
+        this.tableId = tableId;
     }
 
     public Long getId() {
@@ -63,19 +58,11 @@ public class Order {
         this.garconId = garconId;
     }
 
-    public Long getMenuItem() {
-        return menuItem;
+    public String getStatus() {
+        return status;
     }
 
-    public void setMenuItem(Long menuItem) {
-        this.menuItem = menuItem;
-    }
-
-    public String getSessionUuid() {
-        return sessionUuid;
-    }
-
-    public void setSessionUuid(String sessionUuid) {
-        this.sessionUuid = sessionUuid;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
