@@ -1,7 +1,8 @@
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
+import {Button} from 'react-native-elements';
 import {connect} from 'react-redux';
-import {fetchUserUuid, GENERATE_USER_UUID, generateUserUuid} from "./actions";
+import {fetchUserUuid, GENERATE_USER_UUID, generateUserUuid, openUserOrder} from "./actions";
 
 
 export class Home extends React.Component {
@@ -14,16 +15,24 @@ export class Home extends React.Component {
        }
     };
 
+    openNewOrder = () => {
+        if(this.props.orders && this.props.orders.length) {
+            console.log('Order already opened.');
+            return;
+        }
+
+        this.props.openOrder(this.props.userUuid, 1);
+    };
+
   render() {
     return (
       <View style={styles.container} >
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-        <Text>It Works !!!</Text>
+        <Text>Start Ordering Here BITCH !!!!!</Text>
+
         <Button
-          title="Open"
-          onPress={this.props.navigation.openDrawer}
+            large
+          title="Open Order"
+          onPress={this.openNewOrder}
         />
       </View>
     );
@@ -40,14 +49,16 @@ const styles = StyleSheet.create({
 
 mapStateToProps = (state) => {
     return {
-        userUuid: state.userUuid
+        userUuid: state.userUuid,
+        orders: state.orders
     }
 };
 
 mapDispatchToProps = dispatch => {
     return {
         getUserUuid: () => dispatch(fetchUserUuid()),
-        generateUuid: () => dispatch(generateUserUuid())
+        generateUuid: () => dispatch(generateUserUuid()),
+        openOrder: (userUuid, tableId) => dispatch(openUserOrder(userUuid, tableId))
     };
 };
 

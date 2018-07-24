@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {fetchFood} from './actions';
 import MenuGrid from "../MenuGrid";
+import {orderItem} from "../actions";
 
 export class FoodMenu extends React.Component {
 
@@ -10,7 +11,19 @@ export class FoodMenu extends React.Component {
     }
 
     clickHandler = (food) => {
-        console.log(food);
+        if(!this.props.orders.length) {
+            console.log('Too many open orders.');
+            return;
+        }
+
+        const newOrder = {
+            menuItemId: food.id,
+            count: 1,
+            totalCost: 1 * food.price,
+            orderId: this.props.orders[0].id
+        };
+
+        this.props.orderNewItem(newOrder, this.props.userUuid);
     };
 
     render() {
@@ -25,13 +38,16 @@ export class FoodMenu extends React.Component {
 
 mapStateToProps = (state) => {
     return {
-        food: state.food
+        userUuid: state.userUuid,
+        food: state.food,
+        orders: state.orders
     }
 };
 
 mapDispatchToProps = dispatch => {
     return {
-        loadFood: () => dispatch(fetchFood())
+        loadFood: () => dispatch(fetchFood()),
+        orderNewItem: (order, userUuid) => dispatch(orderItem(order, userUuid))
     };
 };
 

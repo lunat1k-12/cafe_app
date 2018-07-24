@@ -2,6 +2,7 @@ package com.cafetery.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @Table(name = "ORDERS")
@@ -25,6 +26,28 @@ public class Order {
     @NotNull
     @Column(name = "STATUS")
     private String status;
+
+    @Column(name = "ORDER_DATE")
+    private Date orderDate;
+
+    @Column(name = "CLOSE_DATE")
+    private Date closeDate;
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public Date getCloseDate() {
+        return closeDate;
+    }
+
+    public void setCloseDate(Date closeDate) {
+        this.closeDate = closeDate;
+    }
 
     public Long getTableId() {
         return tableId;

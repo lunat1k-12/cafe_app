@@ -2,6 +2,7 @@ package com.cafetery.controllers;
 
 import com.cafetery.domain.Order;
 import com.cafetery.domain.OrderItem;
+import com.cafetery.domain.comp.CompOrder;
 import com.cafetery.domain.wrapper.Result;
 import com.cafetery.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class OrderController {
 
     @GetMapping("/{userUuid}/get-open-orders")
     @ResponseBody
-    public List<Order> getOpenOrders(@PathVariable("userUuid") String userUuid) {
+    public List<CompOrder> getOpenOrders(@PathVariable("userUuid") String userUuid) {
         return orderService.findOpenByUserId(userUuid);
     }
 

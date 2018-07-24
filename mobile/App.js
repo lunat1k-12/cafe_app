@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import {watchFetch} from "./app/sagas";
 import CocktailsMenu from "./app/components/Menu/CocktailsMenu";
 import {COLORS} from "./app/Utils/constants";
+import UserOrders from "./app/components/UserOrders";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));
@@ -44,6 +45,10 @@ const MyApp = createDrawerNavigator({
   FoodMenu: {
     screen: FoodMenu,
     navigationOptions: { title: 'Food Menu' }
+  },
+  UserOrders: {
+    screen: UserOrders,
+    navigationOptions: { title: 'My Orders' }
   }
 }, {
   drawerBackgroundColor: COLORS.black,

@@ -237,6 +237,8 @@
             <column name="GARCON_ID" type="varchar(255)" />
             <column name="TABLE_ID" type="number"/>
             <column name="STATUS" type="varchar(255)" />
+            <column name="ORDER_DATE" type="datetime"/>
+            <column name="CLOSE_DATE" type="datetime"/>
         </createTable>
     </changeSet>
 

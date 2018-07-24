@@ -11,6 +11,6 @@ import java.util.List;
 @Component
 public interface OrderRepository extends CrudRepository<Order, Long> {
 
-    @Query(value = "SELECT * FROM Order WHERE USER_ID = :userId AND STATUS = 'OPEN'", nativeQuery = true)
+    @Query(value = "SELECT * FROM ORDERS WHERE USER_ID = :userId AND STATUS = 'OPEN'", nativeQuery = true)
     List<Order> findOpenByUserId(@Param("userId") String userId);
 }

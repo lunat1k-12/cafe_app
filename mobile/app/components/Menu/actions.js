@@ -1,5 +1,6 @@
 import {call, put} from "redux-saga/es/effects";
-import {NEW_ORDER_UUID, URL_BASE} from "../../Utils/constants";
+import {URL_BASE} from "../../Utils/constants";
+import {loadUserOrders} from "../Home/actions";
 
 export const ITEMS_ORDERED = 'ITEMS_ORDERED';
 export const ORDER_REQUEST = 'ORDER_REQUEST';
@@ -11,18 +12,19 @@ export const itemsOrdered = (orders) => {
     };
 };
 
-export const orderItem = (order) => {
+export const orderItem = (order, userUuid) => {
     return {
         type: ORDER_REQUEST,
         order,
-        sessionUuid: order.sessionUuid ? order.sessionUuid : NEW_ORDER_UUID
+        userUuid
     };
 };
 
 export function* orderItemsAsync(action) {
     try {
+        console.log(action);
         const data = yield call(() => {
-                return fetch(URL_BASE + `/order/${action.sessionUuid}/add-item`,
+                return fetch(URL_BASE + `/order/add-item`,
                     {
                         headers: {
                             'Accept': 'application/json',
@@ -34,8 +36,8 @@ export function* orderItemsAsync(action) {
                     .then(res => res.json())
             }
         );
-        yield put(itemsOrdered(data));
+        yield put(loadUserOrders(action.userUuid));
     } catch (error) {
-        yield put(itemsOrdered([]));
+        yield put(loadUserOrders(action.userUuid));
     }
 }

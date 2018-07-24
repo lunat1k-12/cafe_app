@@ -2,6 +2,7 @@ package com.cafetery.service;
 
 import com.cafetery.domain.Order;
 import com.cafetery.domain.OrderItem;
+import com.cafetery.domain.comp.CompOrder;
 import com.cafetery.domain.wrapper.Result;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface IOrderService {
 
     void bindWaitressId(String garconId, Long orderId);
 
-    List<Order> findOpenByUserId(String userUuid);
+    List<CompOrder> findOpenByUserId(String userUuid);
 
     Order openNewOrder(String userUuid, Long tableId);
 }

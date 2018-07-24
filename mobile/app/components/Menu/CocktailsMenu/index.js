@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {fetchCocktails} from "./actions";
 import MenuGrid from "../MenuGrid";
-import {ORDER_OPEN} from "../../../Utils/constants";
 import {orderItem} from "../actions";
 
 export class CocktailsMenu extends React.Component {
@@ -12,27 +11,21 @@ export class CocktailsMenu extends React.Component {
     }
 
     clickHandler = (cocktail) => {
+        if(!this.props.orders.length) {
+            console.log('Too many open orders.');
+            return;
+        }
+
         const newOrder = {
-            userId: this.props.userUuid,
-            menuItem: cocktail.id,
-            status: ORDER_OPEN,
-            sessionUuid: this.findSessionUuid()
+            menuItemId: cocktail.id,
+            count: 1,
+            totalCost: 1 * cocktail.price,
+            orderId: this.props.orders[0].id
         };
-        this.props.orderNewItem(newOrder);
-      //console.log(this.props.orders);
+
+        this.props.orderNewItem(newOrder, this.props.userUuid);
     };
 
-    findSessionUuid = () => {
-        let sessionUuid = null;
-
-        this.props.orders.forEach(function(item) {
-            if(ORDER_OPEN === item.status) {
-                sessionUuid = item.sessionUuid;
-            }
-        });
-
-        return sessionUuid;
-    };
 
     render() {
         return(
@@ -54,7 +47,7 @@ mapStateToProps = (state) => {
 mapDispatchToProps = dispatch => {
     return {
         loadCocktails: () => dispatch(fetchCocktails()),
-        orderNewItem: (order) => dispatch(orderItem(order))
+        orderNewItem: (order, userUuid) => dispatch(orderItem(order, userUuid))
     };
 };
 

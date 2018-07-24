@@ -6,11 +6,17 @@ import com.cafetery.dao.OrderItemRepository;
 import com.cafetery.dao.OrderRepository;
 import com.cafetery.domain.Order;
 import com.cafetery.domain.OrderItem;
+import com.cafetery.domain.comp.CompOrder;
 import com.cafetery.domain.wrapper.Result;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class OrderService implements IOrderService {
 
@@ -47,6 +53,7 @@ public class OrderService implements IOrderService {
         }
         Order order = optional.get();
         order.setStatus(OrderStatus.CLOSED.toString());
+        order.setCloseDate(new Date());
 
         orderRepo.save(order);
         clientNotify.orderUpdated(order);
@@ -76,8 +83,18 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<Order> findOpenByUserId(String userUuid) {
-        return orderRepo.findOpenByUserId(userUuid);
+    public List<CompOrder> findOpenByUserId(String userUuid) {
+        List<Order> orders = orderRepo.findOpenByUserId(userUuid);
+        if(CollectionUtils.isEmpty(orders)) {
+            return Collections.emptyList();
+        }
+
+        return orders.stream().map(dbOrder -> {
+            CompOrder comp = new CompOrder();
+            BeanUtils.copyProperties(dbOrder, comp);
+            comp.setOrderItems(orderItemRepo.findByOrderId(dbOrder.getId()));
+            return comp;
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -86,6 +103,7 @@ public class OrderService implements IOrderService {
         order.setUserId(userUuid);
         order.setStatus(OrderStatus.OPEN.name());
         order.setTableId(tableId);
+        order.setOrderDate(new Date());
         return orderRepo.save(order);
     }
 
