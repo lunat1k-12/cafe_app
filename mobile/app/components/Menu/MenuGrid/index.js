@@ -1,15 +1,24 @@
 import React from 'react';
 import { Card, Button } from 'react-native-elements';
-import {StyleSheet,ScrollView,Text} from "react-native";
-
-const prefix = 'data:image/jpeg;base64,';
+import {StyleSheet,ScrollView,Text,Modal,TextInput,View} from "react-native";
 
 export default class MenuGrid extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {modalVisible: false,
+                      selectedItem: {},
+                      count: 1};
+    }
+
+    showItemModal = (item) => {
+        this.setState({modalVisible: true, selectedItem: item});
+    };
 
     renderItems = () => {
         return this.props.items.map((f, key) =>
             <Card key={key} title={f.title}
-                  image={{uri: f.image ? prefix + f.image : defaultImage}}
+                  image={{uri: f.image ? `data:image/jpeg;base64,${f.image}` : defaultImage}}
                   >
                 <Text style={{marginBottom: 10}}>
                     {f.description}
@@ -18,21 +27,80 @@ export default class MenuGrid extends React.Component {
                     ${f.price}
                 </Text>
                 <Button
-                    icon={{name: 'code'}}
+                    icon={{name: 'add-box'}}
                     backgroundColor='#03A9F4'
                     buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
                     title='Order'
-                    onPress={() => this.props.itemOnClick(f)}/>
+                    onPress={() => this.showItemModal(f)}/>
             </Card>);
     };
-
+//onPress={() => this.props.itemOnClick(f)}/>
     render() {
         return (<ScrollView
             contentContainerStyle={styles.container}
             >
             {this.renderItems()}
+            {this.renderModalItem()}
         </ScrollView>);
     }
+
+    setCount = count => {
+        if(count < 0) {
+            count = 0;
+        }
+        this.setState({count});
+    };
+
+    orderItem = () => {
+        this.setState({modalVisible:false});
+        this.props.itemOnClick(this.state.selectedItem, this.state.count);
+    };
+
+    renderModalItem = () => {
+        const { selectedItem }  = this.state;
+        return (<Modal
+            animationType="slide"
+            transparent={false}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+                alert('Modal has been closed.');
+            }}>
+            <View style={{marginTop: 22}}>
+                <Card title={selectedItem.title}
+                      image={{uri: selectedItem.image ? `data:image/jpeg;base64,${selectedItem.image}` : defaultImage}}
+                >
+                    <Text style={{marginBottom: 10}}>
+                        {selectedItem.description}
+                    </Text>
+                    <Text style={{marginBottom: 10}}>
+                        ${selectedItem.price}
+                    </Text>
+                    <View>
+                        <Text>Count: {this.state.count}</Text>
+                        <Button
+                            buttonStyle={styles.countButton}
+                            title='+'
+                            onPress={() => this.setCount(this.state.count + 1)}/>
+                        <Button
+                            buttonStyle={styles.countButton}
+                            title='-'
+                            onPress={() => this.setCount(this.state.count - 1)}/>
+                    </View>
+                    <Button
+                        icon={{name: 'add-box'}}
+                        backgroundColor='#03A9F4'
+                        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                        title='Order'
+                        onPress={this.orderItem}/>
+                    <Button
+                        backgroundColor='#03A9F4'
+                        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                        title='Cancel'
+                        onPress={() => this.setState({modalVisible:false})}/>
+                </Card>
+            </View>
+        </Modal>);
+    };
 }
 
 const styles = StyleSheet.create({
@@ -41,6 +109,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         //alignItems: 'center',
         //justifyContent: 'center',
+    },
+    countButton: {
+        height: 40,
+        width: 40
     }
 });
 

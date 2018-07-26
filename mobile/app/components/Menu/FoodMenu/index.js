@@ -10,16 +10,16 @@ export class FoodMenu extends React.Component {
         this.props.loadFood();
     }
 
-    clickHandler = (food) => {
+    clickHandler = (food, count) => {
         if(!this.props.orders.length) {
-            console.log('Too many open orders.');
+            console.log('no open orders.');
             return;
         }
 
         const newOrder = {
             menuItemId: food.id,
-            count: 1,
-            totalCost: 1 * food.price,
+            count,
+            totalCost: count * food.price,
             orderId: this.props.orders[0].id
         };
 

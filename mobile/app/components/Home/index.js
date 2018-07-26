@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {connect} from 'react-redux';
-import {fetchUserUuid, GENERATE_USER_UUID, generateUserUuid, openUserOrder} from "./actions";
+import {fetchUserUuid, GENERATE_USER_UUID, generateUserUuid, openUserOrder, setUserUUid} from "./actions";
 
 
 export class Home extends React.Component {
@@ -13,6 +13,16 @@ export class Home extends React.Component {
        } else if(this.props.userUuid === GENERATE_USER_UUID) {
            this.props.generateUuid();
        }
+    };
+
+    componentDidUpdate() {
+        if(this.props.userUuid === GENERATE_USER_UUID) {
+            this.props.generateUuid();
+        }
+    };
+
+    cleanUserIdHolder = () => {
+       this.props.cleanUserUuid();
     };
 
     openNewOrder = () => {
@@ -29,11 +39,17 @@ export class Home extends React.Component {
       <View style={styles.container} >
         <Text>Start Ordering Here BITCH !!!!!</Text>
 
-        <Button
-            large
-          title="Open Order"
-          onPress={this.openNewOrder}
-        />
+          <Button
+              large
+              title="Open Order"
+              onPress={this.openNewOrder}
+          />
+
+          <Button
+              large
+              title="Clean user ID"
+              onPress={this.cleanUserIdHolder}
+          />
       </View>
     );
   }
@@ -58,7 +74,8 @@ mapDispatchToProps = dispatch => {
     return {
         getUserUuid: () => dispatch(fetchUserUuid()),
         generateUuid: () => dispatch(generateUserUuid()),
-        openOrder: (userUuid, tableId) => dispatch(openUserOrder(userUuid, tableId))
+        openOrder: (userUuid, tableId) => dispatch(openUserOrder(userUuid, tableId)),
+        cleanUserUuid: () => dispatch(setUserUUid(GENERATE_USER_UUID))
     };
 };
 
