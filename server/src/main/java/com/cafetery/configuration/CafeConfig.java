@@ -1,8 +1,10 @@
 package com.cafetery.configuration;
 
 import com.cafetery.service.*;
+import com.cafetery.service.auth.CafeUserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class CafeConfig {
@@ -31,4 +33,16 @@ public class CafeConfig {
     public IClientNotify getClientNotify() {
         return new ClientNotify();
     }
+
+    @Bean
+    public CafeUserDetailService getCafeUserDetailService()
+    {
+        return new CafeUserDetailService();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }
