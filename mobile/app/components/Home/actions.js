@@ -1,7 +1,8 @@
 import {call, put} from "redux-saga/es/effects";
-import {URL_BASE} from "../../Utils/constants";
+import {DEFAULT_PASS, URL_BASE} from "../../Utils/constants";
 import {AsyncStorage} from 'react-native';
 import {itemsOrdered} from "../Menu/actions";
+import {btoa} from "Base64";
 
 export const SET_USER_ID = 'SET_USER_ID';
 export const FETCHED_USER_UUID = 'FETCHED_USER_UUID';
@@ -49,8 +50,19 @@ export function generateUserUuid() {
 
 export function* fetchOpenNewOrder(action) {
     try {
+        const userUuid = yield call(() => {
+                return AsyncStorage.getItem("userUuid");
+            }
+        );
+
         const order = yield call(() => {
-                return fetch(URL_BASE + `/order/${action.userUuid}/${action.tableId}/open`)
+                return fetch(URL_BASE + `/order/${action.userUuid}/${action.tableId}/open`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Basic ' + btoa(`${userUuid}:${DEFAULT_PASS}`),
+                        'Content-Type': 'application/json'
+                    }
+                })
                     .then(res => res.json());
             }
         );
@@ -100,7 +112,13 @@ export function* generateUserUuidAsync() {
 export function* fetchUserOrdersAsync(action) {
     try {
         const orders = yield call(() => {
-                return fetch(URL_BASE + `/order/${action.userUuid}/get-open-orders`)
+                return fetch(URL_BASE + `/order/${action.userUuid}/get-open-orders`,{
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Basic ' + btoa(`${action.userUuid}:${DEFAULT_PASS}`),
+                        'Content-Type': 'application/json'
+                    }
+                })
                     .then(res => res.json());
             }
         );

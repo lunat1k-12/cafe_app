@@ -30,7 +30,7 @@ export default class MenuGrid extends React.Component {
                     icon={{name: 'add-box'}}
                     backgroundColor='#03A9F4'
                     buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='Order'
+                    title='Details'
                     onPress={() => this.showItemModal(f)}/>
             </Card>);
     };
